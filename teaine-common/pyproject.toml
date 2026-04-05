@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "teaine-common"
+version = "0.1.0"
+description = "Shared models, protocols, and utilities for Project Teaine."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.12.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["teaine_common"]

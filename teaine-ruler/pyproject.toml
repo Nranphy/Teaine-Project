@@ -1,0 +1,22 @@
+[project]
+name = "teaine-ruler"
+version = "0.1.0"
+description = "The resource manager backend of Project Teaine."
+authors = [
+    { name = "Nranphy", email = "Nranphy@outlook.com" }
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "uvicorn[standard]>=0.31.1,<0.32.0",
+    "fastapi[standard]>=0.115.0,<0.116.0",
+    "sqlmodel>=0.0.22,<0.0.23",
+    "pydantic-settings>=2.5.2,<3.0.0",
+    "loguru>=0.7.2,<0.8.0",
+    "psycopg2>=2.9.9,<3.0.0",
+    "aiofiles>=24.1.0,<25.0.0",
+    "teaine-common",
+]
+
+[tool.uv.sources]
+teaine-common = { path = "../teaine-common", editable = true }

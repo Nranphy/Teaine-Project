@@ -1,0 +1,39 @@
+{
+  "name": "Teaine-Project",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "forwardPorts": [
+    5432,
+    6333,
+    6334
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "cweijan.vscode-postgresql-client2",
+        "eeyore.yapf",
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "vivaxy.vscode-conventional-commits"
+      ],
+      "settings": {
+        "files.autoSave": "off",
+        "workbench.colorTheme": "Dark Modern",
+        "editor.fontSize": 14,
+        "[python]": {
+          "editor.formatOnSaveMode": "file",
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "eeyore.yapf",
+          "editor.formatOnType": false
+        },
+        "python.analysis.typeCheckingMode": "basic",
+        "yapf.args": [
+          "--style",
+          "{based_on_style: facebook, BLANK_LINE_BEFORE_NESTED_CLASS_OR_DEF: true, COLUMN_LIMIT: 120}"
+        ]
+      }
+    }
+  }
+}

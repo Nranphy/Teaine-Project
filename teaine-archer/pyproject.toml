@@ -1,0 +1,16 @@
+[project]
+name = "teaine-archer"
+version = "0.1.0"
+description = "The platform event collector and adapter of Project Teaine."
+authors = [
+    { name = "Nranphy", email = "Nranphy@outlook.com" }
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "loguru>=0.7.2,<0.8.0",
+    "teaine-common",
+]
+
+[tool.uv.sources]
+teaine-common = { path = "../teaine-common", editable = true }

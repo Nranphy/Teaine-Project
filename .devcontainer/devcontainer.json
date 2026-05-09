@@ -4,35 +4,43 @@
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
-  "forwardPorts": [
-    5432,
-    6333,
-    6334
-  ],
   "customizations": {
     "vscode": {
       "extensions": [
         "cweijan.vscode-postgresql-client2",
-        "eeyore.yapf",
+        "charliermarsh.ruff",
         "ms-python.python",
         "ms-azuretools.vscode-docker",
         "vivaxy.vscode-conventional-commits"
       ],
       "settings": {
-        "files.autoSave": "off",
-        "workbench.colorTheme": "Dark Modern",
         "editor.fontSize": 14,
+        "files.autoSave": "off",
+        "window.autoDetectColorScheme": true,
+        "workbench.startupEditor": "none",
+        "workbench.colorTheme": "Dark Modern",
+        "workbench.preferredDarkColorTheme": "Dark Modern",
+        "python.analysis.typeCheckingMode": "basic",
         "[python]": {
-          "editor.formatOnSaveMode": "file",
+          "editor.formatOnSaveMode": "modificationsIfAvailable",
           "editor.formatOnSave": true,
-          "editor.defaultFormatter": "eeyore.yapf",
+          "editor.defaultFormatter": "charliermarsh.ruff",
           "editor.formatOnType": false
         },
-        "python.analysis.typeCheckingMode": "basic",
-        "yapf.args": [
-          "--style",
-          "{based_on_style: facebook, BLANK_LINE_BEFORE_NESTED_CLASS_OR_DEF: true, COLUMN_LIMIT: 120}"
-        ]
+        "ruff.lint.enable": false,
+        "ruff.configurationPreference": "editorOnly",
+        "ruff.configuration": {
+          "target-version": "py313",
+          "line-length": 120,
+          "indent-width": 4,
+          "format": {
+            "quote-style": "single",
+            "indent-style": "space",
+            "line-ending": "auto",
+            "docstring-code-format": true,
+            "docstring-code-line-length": 120
+          }
+        }
       }
     }
   }

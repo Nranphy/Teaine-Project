@@ -1,19 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd /workspaces/Teaine-Project
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+cd "${WORKSPACE_DIR}"
 
 python -m pip install --upgrade pip
-python -m pip install uv
+python -m pip install --upgrade uv ruff
 
-if [ -f "teaine-grail/pyproject.toml" ]; then
-  (cd teaine-grail && uv sync)
-fi
+projects=(
+  "teaine-common"
+  "teaine-ruler"
+  "teaine-archer"
+  "teaine-grail"
+)
 
-if [ -f "teaine-ruler/pyproject.toml" ]; then
-  (cd teaine-ruler && uv sync)
-fi
-
-if [ -f "teaine-common/pyproject.toml" ]; then
-  (cd teaine-common && uv sync)
-fi
+for project in "${projects[@]}"; do
+  if [ -f "${project}/pyproject.toml" ]; then
+    echo "Syncing ${project}..."
+    (cd "${project}" && uv sync)
+  fi
+done

@@ -3,7 +3,7 @@
 from pydantic import Field
 from typing import Any
 
-from teaine_common.models.enums import PlatformEnum
+from teaine_common.enum import PlatformEnum
 from .base import EntityModel, current_timestamp_ms
 
 

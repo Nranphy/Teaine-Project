@@ -3,7 +3,7 @@
 from pydantic import Field
 from typing import Any
 
-from teaine_common.models.enums import ActivityTypeEnum
+from teaine_common.enum import ActivityTypeEnum
 from .base import EntityModel, current_timestamp_ms
 
 

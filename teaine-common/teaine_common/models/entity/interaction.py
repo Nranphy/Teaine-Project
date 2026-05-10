@@ -3,6 +3,7 @@
 from pydantic import Field
 from typing import Any
 
+from teaine_common.enum import InteractionType
 from .base import EntityModel, current_timestamp_ms
 
 
@@ -12,7 +13,7 @@ class Interaction(EntityModel):
     id: int | None = None
     """交互行为记录主键 ID"""
 
-    type: str
+    type: InteractionType
     """交互行为类型"""
 
     activity_id: int

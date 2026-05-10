@@ -1,0 +1,14 @@
+CREATE TABLE interaction (
+    id SERIAL NOT NULL,
+    type VARCHAR NOT NULL,
+    activity_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    text TEXT NOT NULL DEFAULT '',
+    amount INTEGER NOT NULL DEFAULT 0,
+    item_name VARCHAR NOT NULL DEFAULT '',
+    item_num INTEGER NOT NULL DEFAULT 0,
+    event_timestamp BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
+    created_at BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
+    fields JSON NOT NULL DEFAULT '{}'::json,
+    PRIMARY KEY (id)
+);

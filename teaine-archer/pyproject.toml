@@ -8,8 +8,12 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "httpx>=0.28.1",
     "loguru>=0.7.2,<0.8.0",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.1",
     "teaine-common",
+    "websockets>=16.0",
 ]
 
 [tool.uv.sources]

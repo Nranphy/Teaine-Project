@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from ..models.corpus import Corpus, KNOWLEDGE_KEYS
+from ..models.corpus import KNOWLEDGE_KEYS, Corpus
 
 
 class CorpusPromptStrategy(ABC):
@@ -31,7 +31,7 @@ class CorpusPromptStrategy(ABC):
     @abstractmethod
     def convert(cls, corpus: Corpus) -> str:
         """Corpus 实例转 Prompt 文本"""
-        raise NotImplementedError('Corpus 转 Prompt str 方法未实现。')
+        raise NotImplementedError("Corpus 转 Prompt str 方法未实现。")
 
 
 __all__ = [

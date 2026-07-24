@@ -13,10 +13,10 @@ def current_timestamp_ms() -> int:
 class EntityModel(BaseModel):
     """实体模型基类"""
 
-    model_config = ConfigDict(extra='forbid')
+    model_config = ConfigDict(extra="forbid")
 
 
 __all__ = [
-    'EntityModel',
-    'current_timestamp_ms',
+    "EntityModel",
+    "current_timestamp_ms",
 ]

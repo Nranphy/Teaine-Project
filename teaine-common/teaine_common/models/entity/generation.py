@@ -1,7 +1,8 @@
 """AI 生成内容实体模型"""
 
-from pydantic import Field
 from typing import Any
+
+from pydantic import Field
 
 from .base import EntityModel, current_timestamp_ms
 
@@ -18,10 +19,10 @@ class Generation(EntityModel):
     interaction_ids: list[int] = Field(default_factory=list)
     """关联的用户交互行为 ID 列表，非交互触发时为空列表"""
 
-    input_text: str = ''
+    input_text: str = ""
     """模型本次生成的主要输入文本"""
 
-    output_text: str = ''
+    output_text: str = ""
     """模型原始输出文本内容"""
 
     call_time: int = Field(default_factory=current_timestamp_ms)
@@ -35,5 +36,5 @@ class Generation(EntityModel):
 
 
 __all__ = [
-    'Generation',
+    "Generation",
 ]

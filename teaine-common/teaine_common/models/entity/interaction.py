@@ -1,9 +1,11 @@
 """用户交互行为实体模型"""
 
-from pydantic import Field
 from typing import Any
 
+from pydantic import Field
+
 from teaine_common.enum import InteractionType
+
 from .base import EntityModel, current_timestamp_ms
 
 
@@ -22,13 +24,13 @@ class Interaction(EntityModel):
     user_id: int
     """关联的用户账号系统 ID"""
 
-    text: str = ''
+    text: str = ""
     """交互行为文本内容"""
 
     amount: int = 0
     """交互行为总金额，单位为分"""
 
-    item_name: str = ''
+    item_name: str = ""
     """交互相关项目名称，例如礼物名或订阅套餐名"""
 
     item_num: int = 0
@@ -45,5 +47,5 @@ class Interaction(EntityModel):
 
 
 __all__ = [
-    'Interaction',
+    "Interaction",
 ]

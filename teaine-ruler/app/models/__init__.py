@@ -1,0 +1,1 @@
+"""Deprecated compatibility module."""

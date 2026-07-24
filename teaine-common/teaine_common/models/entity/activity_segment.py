@@ -1,9 +1,11 @@
 """业务活动阶段实体模型"""
 
-from pydantic import Field
 from typing import Any
 
+from pydantic import Field
+
 from teaine_common.enum import ActivitySegmentTypeEnum
+
 from .base import EntityModel, current_timestamp_ms
 
 
@@ -19,10 +21,10 @@ class ActivitySegment(EntityModel):
     activity_id: int
     """关联的业务活动 ID"""
 
-    title: str = ''
+    title: str = ""
     """业务活动阶段标题"""
 
-    description: str = ''
+    description: str = ""
     """业务活动阶段描述"""
 
     start_timestamp: int = Field(default_factory=current_timestamp_ms)
@@ -39,5 +41,5 @@ class ActivitySegment(EntityModel):
 
 
 __all__ = [
-    'ActivitySegment',
+    "ActivitySegment",
 ]

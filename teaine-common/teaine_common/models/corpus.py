@@ -1,14 +1,15 @@
-from pydantic import BaseModel, Field, model_validator
 from typing import Literal
 
-ROLE_TYPE = Literal['system', 'user', 'assistant']
+from pydantic import BaseModel, Field, model_validator
+
+ROLE_TYPE = Literal["system", "user", "assistant"]
 """角色类型字面量"""
 
 KNOWLEDGE_KEYS = Literal[
-    'user_description',
-    'datetime_info',
-    'background_info',
-    'other',
+    "user_description",
+    "datetime_info",
+    "background_info",
+    "other",
 ]
 """
 知识文本块命名键
@@ -88,7 +89,9 @@ class Corpus(BaseModel):
             if msg.role.name is not None:
                 if msg.role.name not in role_pool[msg.role.role_type]:
                     role_pool[msg.role.role_type].add(msg.role.name)
-                    self.role_name_map[msg.role.name] = msg.role.role_type + str(len(role_pool[msg.role.role_type]))
+                    self.role_name_map[msg.role.name] = msg.role.role_type + str(
+                        len(role_pool[msg.role.role_type])
+                    )
         for k, v in role_pool.items():
             if len(v) == 1:
                 name = list(v)[0]
@@ -99,10 +102,10 @@ class Corpus(BaseModel):
 class DatasetInfo(BaseModel):
     """语料数据集信息模型"""
 
-    name: str = ''
+    name: str = ""
     """数据集名称"""
 
-    description: str = ''
+    description: str = ""
     """数据集描述"""
 
     bucket_num: int = 8

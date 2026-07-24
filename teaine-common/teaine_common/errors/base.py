@@ -1,5 +1,5 @@
 class TeaineError(Exception):
-    """Base exception for Project Teaine clients."""
+    """Project Teaine 客户端基础异常。"""
 
 
 __all__ = ["TeaineError"]

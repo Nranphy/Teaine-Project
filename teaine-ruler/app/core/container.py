@@ -4,12 +4,11 @@ from app.core.corpus import CorpusService
 from app.core.kms import KmsService
 from app.core.prompt import PromptService
 from app.core.system import SystemService
-from app.settings.config import get_settings
+from config import settings
 
 
 class Services:
     def __init__(self):
-        settings = get_settings()
         self.kms = KmsService(settings.kms_data_file)
         self.system = SystemService(self.kms)
         self.prompt = PromptService(settings.prompt_data_dir)

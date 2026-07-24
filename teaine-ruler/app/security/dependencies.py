@@ -2,7 +2,7 @@ from fastapi import Header, HTTPException, status
 from teaine_common.enums.auth import X_TEAINE_API_KEY, X_TEAINE_SERVICE
 from teaine_common.models.auth import ServiceIdentity
 
-from app.settings.config import get_settings
+from config import settings
 
 
 async def require_internal_service(
@@ -13,7 +13,7 @@ async def require_internal_service(
         raise HTTPException(
             status.HTTP_401_UNAUTHORIZED, "missing internal service credentials"
         )
-    expected = get_settings().internal_api_keys.get(service_name)
+    expected = settings.internal_api_keys.get(service_name)
     if expected is None or expected != api_key:
         raise HTTPException(
             status.HTTP_403_FORBIDDEN, "invalid internal service credentials"

@@ -2,7 +2,7 @@
 
 茶因计划·资源管理器后端。
 
-Ruler 是 Project Teaine 的内部控制面服务，提供 HTTP API、内部服务鉴权、Prompt、Corpus、KMS、Record 和 Tool 等底层能力。
+Ruler 是 Project Teaine 的内部控制面服务，提供 HTTP API、内部服务鉴权、Prompt、KMS、Record 和 Tool 等底层能力。
 
 ## 技术选择
 
@@ -25,7 +25,6 @@ X-Teaine-Common-Version: 0.1.0
 
 - `system`：服务信息与 common 版本读取。
 - `kms`：普通命名空间 KV。
-- `prompt`：Prompt 模板读取、创建和渲染。
-- `corpus`：语料数据集和 jsonl 分桶写入。
+- `prompt`：Prompt 模板创建、删除、更新和渲染。
 
 Common 版本不使用独立 policy；它只是 KMS 中的普通 KV：`system/common_version`。

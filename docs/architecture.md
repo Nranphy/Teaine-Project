@@ -17,7 +17,7 @@ Project Teaine 是一个分布式、以本地优先为核心的虚拟 Agent 系�
 
 ### 2.1 Ruler
 
-`Ruler` 是共享控制面。它负责内部 HTTP API、内部服务鉴权、共享数据访问、KMS、Prompt、Corpus、Record、Tool 等底层能力。
+`Ruler` 是共享控制面。它负责内部 HTTP API、内部服务鉴权、共享数据访问、KMS、Prompt、Record、Tool 等底层能力。当前阶段暂不提供 Corpus 能力。
 
 Ruler 当前以 Supabase PostgreSQL 作为主数据存储。服务端核心数据访问优先通过 SQLAlchemy async / PostgreSQL connection 完成；Supabase SDK 只作为后续访问 Auth、Storage、Realtime 等 Supabase 能力的可选基础设施封装。
 
@@ -98,10 +98,24 @@ Common 版本由 Ruler KMS 中的普通 KV 记录，默认键为 `system/common_
 - 涉及依赖新增、删除或版本调整时，必须使用对应模块的 `uv add`、`uv remove`、`uv lock` 等命令完成，不直接手写 `pyproject.toml` 或 `uv.lock` 的依赖变更。
 - 不在 import 外层添加 try/except。
 - 注释和 docstring 使用中文。
+- 方法 docstring 使用 Sphinx 风格标签，例如 `:param xxx:`、`:return:`、`:raises Xxx:`。
 - 只保留必要注释和 docstring，内容聚焦模块、类、函数、参数、返回值、异常和关键约束。
 - 不编写“针对某个需求”“开发方法”“为达成某个目的”等无法帮助理解代码本身的解释性注释。
 
-### 5.3 测试与提交
+### 5.3 Ruler 当前实现约定
+
+- Ruler 目录使用 `app/services` 作为业务服务层，不再使用旧名 `core`。
+- Ruler 目录使用 `app/infra` 作为基础设施适配层，不再使用旧名 `infrastructure`。
+- Ruler 内部鉴权应作为 `app/middleware` 下的 HTTP middleware 提供，不恢复单独的 `security` 目录。
+- 日志入口放在 `app/utils/log.py`，不恢复单独的 `logging` 目录。
+- Ruler 配置入口放在 `app/config.py`，不放在 Ruler 根目录。
+- Ruler 当前能力保留 `system`、`kms`、`prompt`；Corpus 当前已从 Ruler 和 Common 中移除。
+- KMS 使用数据库存储，写入追加新版本，读取返回最新版本，value 入库前需要编码。
+- Prompt 使用数据库存储，字段为 `name`、`description`、`content`、`params`；渲染时必须校验 `params` 声明的必需参数。
+- Ruler 不再使用本地 `app/data` 存储 KMS、Prompt 或 Corpus 数据。
+- Ruler 启动参数为 `python -m app --env test|prod`，默认 `test`；环境变量清单文件使用 `.env.test` 和 `.env.prod`，当前只写变量键名。
+
+### 5.4 测试与提交
 
 - 每个可运行模块都应具备对应单元测试。
 - 修改或新增模块时，应同步补齐受影响行为的测试。

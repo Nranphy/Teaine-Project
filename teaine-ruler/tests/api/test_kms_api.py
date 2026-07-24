@@ -11,6 +11,15 @@ def test_kms_set_and_get():
         "/api/v1/internal/kms/test/example", headers=HEADERS, json={"value": "ok"}
     )
     assert put.status_code == 200
+    assert put.json()["version"] == 1
+
+    put = client.put(
+        "/api/v1/internal/kms/test/example", headers=HEADERS, json={"value": "new"}
+    )
+    assert put.status_code == 200
+    assert put.json()["version"] == 2
+
     get = client.get("/api/v1/internal/kms/test/example", headers=HEADERS)
     assert get.status_code == 200
-    assert get.json()["value"] == "ok"
+    assert get.json()["value"] == "new"
+    assert get.json()["version"] == 2

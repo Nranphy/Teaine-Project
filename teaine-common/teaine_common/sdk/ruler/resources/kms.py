@@ -1,4 +1,4 @@
-from teaine_common.models.kms import KmsEntry, KmsEntryCreate, KmsEntryUpdate
+from teaine_common.models.kms import KmsEntry, KmsEntryUpdate
 
 
 class RulerKmsResource:
@@ -17,12 +17,5 @@ class RulerKmsResource:
             "PUT", f"/api/v1/internal/kms/{namespace}/{key}", json=payload
         )
         return KmsEntry.model_validate(data)
-
-    async def create(self, entry: KmsEntryCreate) -> KmsEntry:
-        data = await self._client.request(
-            "POST", "/api/v1/internal/kms", json=entry.model_dump()
-        )
-        return KmsEntry.model_validate(data)
-
 
 __all__ = ["RulerKmsResource"]

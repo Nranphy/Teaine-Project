@@ -9,7 +9,6 @@ from teaine_common.errors import AuthenticationError, RulerAPIError
 from teaine_common.sdk.ruler.auth import build_auth_headers
 from teaine_common.sdk.ruler.config import RulerClientConfig
 from teaine_common.sdk.ruler.resources import (
-    RulerCorpusResource,
     RulerKmsResource,
     RulerPromptResource,
     RulerSystemResource,
@@ -30,7 +29,6 @@ class RulerClient:
         self.system = RulerSystemResource(self)
         self.kms = RulerKmsResource(self)
         self.prompt = RulerPromptResource(self)
-        self.corpus = RulerCorpusResource(self)
 
     async def aclose(self) -> None:
         return None

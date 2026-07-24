@@ -20,3 +20,8 @@ dependencies = [
 
 [tool.uv.sources]
 teaine-common = { path = "../teaine-common", editable = true }
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.22.1",
+]

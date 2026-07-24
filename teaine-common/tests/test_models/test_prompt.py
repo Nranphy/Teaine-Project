@@ -1,8 +1,14 @@
 from teaine_common.models.prompt import PromptTemplate
 
 
-def test_prompt_template_renders_params():
+def test_prompt_template_keeps_database_fields():
     prompt = PromptTemplate(
-        name="hello", text="你好，{{{name}}}", params={"name": "茶因"}
+        name="hello",
+        description="greeting",
+        content="你好，{{{name}}}",
+        params="name",
     )
-    assert prompt.text == "你好，茶因"
+    assert prompt.name == "hello"
+    assert prompt.description == "greeting"
+    assert prompt.content == "你好，{{{name}}}"
+    assert prompt.params == "name"

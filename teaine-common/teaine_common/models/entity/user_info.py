@@ -1,9 +1,11 @@
 """用户信息实体模型"""
 
-from pydantic import Field
 from typing import Any
 
+from pydantic import Field
+
 from teaine_common.enum import PlatformEnum
+
 from .base import EntityModel, current_timestamp_ms
 
 
@@ -22,13 +24,13 @@ class UserInfo(EntityModel):
     platform_user_id: str
     """用户在对应媒体平台上的唯一账号 ID"""
 
-    platform_user_name: str = ''
+    platform_user_name: str = ""
     """用户在对应媒体平台上的昵称"""
 
     platform_fields: dict[str, Any] = Field(default_factory=dict)
     """用户账号的平台特有信息字段"""
 
-    description: str = ''
+    description: str = ""
     """用户描述，用于补充昵称、曾用名、经历、情感等认知信息"""
 
     register_timestamp: int = Field(default_factory=current_timestamp_ms)
@@ -36,5 +38,5 @@ class UserInfo(EntityModel):
 
 
 __all__ = [
-    'UserInfo',
+    "UserInfo",
 ]

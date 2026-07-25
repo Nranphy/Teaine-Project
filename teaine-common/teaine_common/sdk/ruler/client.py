@@ -5,7 +5,11 @@ from typing import Any
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from teaine_common.errors import AuthenticationError, RulerAPIError
+from teaine_common.errors import (
+    AuthenticationError,
+    RulerAPIError,
+    VersionMismatchError,
+)
 from teaine_common.sdk.ruler.auth import build_auth_headers
 from teaine_common.sdk.ruler.config import RulerClientConfig
 from teaine_common.sdk.ruler.resources import (
@@ -89,6 +93,15 @@ class RulerClient:
             body = exc.read().decode("utf-8")
             if exc.code in {401, 403}:
                 raise AuthenticationError(exc.code, body) from exc
+            if exc.code == 426:
+                try:
+                    error_data = jsonlib.loads(body)
+                except jsonlib.JSONDecodeError:
+                    error_data = {}
+                raise VersionMismatchError(
+                    error_data.get("client_common_version"),
+                    error_data.get("server_common_version"),
+                ) from exc
             raise RulerAPIError(exc.code, body) from exc
 
 

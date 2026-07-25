@@ -25,8 +25,7 @@ async with RulerClient(
     service_name="grail",
     api_key="secret",
 ) as client:
-    await client.system.ensure_common_version()
     prompt = await client.prompt.render("default", {"name": "茶因"})
 ```
 
-Ruler SDK 当前覆盖 `system`、`kms` 和 `prompt`。Common 版本由 `teaine-common` 程序包内的 `__version__` 定义，SDK 会用本地版本与 Ruler system 接口返回的服务端版本做一致性检查。
+Ruler SDK 当前覆盖 `system`、`kms` 和 `prompt`。SDK 会自动在内部请求头中携带本地 common 版本，Ruler 在请求带有版本头时会与服务端 common 版本做一致性检查。

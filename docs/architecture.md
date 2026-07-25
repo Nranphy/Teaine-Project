@@ -42,7 +42,7 @@ Ruler 当前以 Supabase PostgreSQL 作为主数据存储。服务端核心数�
 - 隐式依赖运行时环境的单例。
 - 业务编排逻辑。
 
-Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Ruler 的 system 接口返回服务端当前导入的 common 版本，调用端用本地 common 版本与服务端版本做一致性检查。
+Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Common SDK 会在内部请求头中自动携带调用端 common 版本；Ruler 收到该请求头时会与服务端当前导入的 common 版本做一致性检查。未携带该请求头的内部请求会跳过 common 版本检查。
 
 ### 2.3 Grail
 
@@ -106,7 +106,7 @@ Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Ruler �
 
 - Ruler 目录使用 `app/services` 作为业务服务层，不再使用旧名 `core`。
 - Ruler 目录使用 `app/infra` 作为基础设施适配层，不再使用旧名 `infrastructure`。
-- Ruler 内部鉴权应作为 `app/middleware` 下的 HTTP middleware 提供，不恢复单独的 `security` 目录。
+- Ruler 内部请求校验应作为 `app/middleware` 下的 HTTP middleware 提供；服务身份、API key、Common 版本检查分别由独立 middleware 承担，不恢复单独的 `security` 目录。
 - 日志入口放在 `app/utils/log.py`，不恢复单独的 `logging` 目录。
 - Ruler 配置入口放在 `app/config.py`，不放在 Ruler 根目录。
 - Ruler 当前能力保留 `system`、`kms`、`prompt`；Corpus 当前已从 Ruler 和 Common 中移除。

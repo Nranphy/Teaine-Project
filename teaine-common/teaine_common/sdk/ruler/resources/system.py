@@ -1,6 +1,4 @@
-from teaine_common.errors import VersionMismatchError
 from teaine_common.models.system import HealthResponse, SystemInfo
-from teaine_common.version import __version__
 
 
 class RulerSystemResource:
@@ -14,11 +12,5 @@ class RulerSystemResource:
     async def info(self) -> SystemInfo:
         data = await self._client.request("GET", "/api/v1/internal/system/info")
         return SystemInfo.model_validate(data)
-
-    async def ensure_common_version(self) -> None:
-        info = await self.info()
-        if info.common_version != __version__:
-            raise VersionMismatchError(__version__, info.common_version)
-
 
 __all__ = ["RulerSystemResource"]

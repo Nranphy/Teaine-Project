@@ -12,7 +12,7 @@ class AuthenticationError(RulerAPIError):
 
 
 class VersionMismatchError(TeaineError):
-    def __init__(self, local_version: str, remote_version: str | None):
+    def __init__(self, local_version: str | None, remote_version: str | None):
         self.local_version = local_version
         self.remote_version = remote_version
         super().__init__(

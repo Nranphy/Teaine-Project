@@ -29,7 +29,7 @@ class Services:
         self.postgres_engine = create_postgres_engine(settings.database_url)
         self.postgres_session_factory = create_session_factory(self.postgres_engine)
         self.kms = KmsService(self.postgres_engine, self.postgres_session_factory)
-        self.system = SystemService(self.kms)
+        self.system = SystemService()
         self.prompt = PromptService(
             self.postgres_engine,
             self.postgres_session_factory,

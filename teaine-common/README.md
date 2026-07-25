@@ -29,4 +29,4 @@ async with RulerClient(
     prompt = await client.prompt.render("default", {"name": "茶因"})
 ```
 
-Ruler SDK 当前覆盖 `system`、`kms` 和 `prompt`。Common 版本使用 Ruler KMS 中的普通 KV 维护，默认键为 `system/common_version`。
+Ruler SDK 当前覆盖 `system`、`kms` 和 `prompt`。Common 版本由 `teaine-common` 程序包内的 `__version__` 定义，SDK 会用本地版本与 Ruler system 接口返回的服务端版本做一致性检查。

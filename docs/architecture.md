@@ -42,7 +42,7 @@ Ruler 当前以 Supabase PostgreSQL 作为主数据存储。服务端核心数�
 - 隐式依赖运行时环境的单例。
 - 业务编排逻辑。
 
-Common 版本由 Ruler KMS 中的普通 KV 记录，默认键为 `system/common_version`。Common SDK 可以在启动时读取该 KV，并与本地包版本做严格一致性检查。
+Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Ruler 的 system 接口返回服务端当前导入的 common 版本，调用端用本地 common 版本与服务端版本做一致性检查。
 
 ### 2.3 Grail
 

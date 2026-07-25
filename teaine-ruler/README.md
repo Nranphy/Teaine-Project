@@ -27,4 +27,4 @@ X-Teaine-Common-Version: 0.1.0
 - `kms`：普通命名空间 KV。
 - `prompt`：Prompt 模板创建、删除、更新和渲染。
 
-Common 版本不使用独立 policy；它只是 KMS 中的普通 KV：`system/common_version`。
+Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Ruler 的 system 接口返回服务端当前导入的 common 版本，调用端用本地 common 版本与服务端版本做一致性检查。

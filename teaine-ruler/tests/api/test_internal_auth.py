@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 
 from app.app import create_app
+from teaine_common.version import __version__
 
 
 def test_internal_requires_auth():
@@ -15,3 +16,4 @@ def test_internal_accepts_dev_key():
     )
     assert response.status_code == 200
     assert response.json()["service"] == "ruler"
+    assert response.json()["common_version"] == __version__

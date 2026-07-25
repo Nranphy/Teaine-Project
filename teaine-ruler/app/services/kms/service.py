@@ -7,7 +7,6 @@ from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
 from app.infra.postgres.tables import kms_entries, metadata
 from app.utils.codec import decode_text, encode_text
 from teaine_common.models.kms import KmsEntry, KmsEntryUpdate
-from teaine_common.version import __version__
 
 
 class KmsService:
@@ -34,7 +33,7 @@ class KmsService:
 
     async def _ensure_initialized(self) -> None:
         """
-        创建所需数据表，并在每个进程内只初始化一次系统键。
+        创建 KMS 所需数据表，并在每个进程内只初始化一次。
 
         :return: None。
         """
@@ -49,31 +48,7 @@ class KmsService:
             async with self.engine.begin() as connection:
                 await connection.run_sync(metadata.create_all)
 
-            await self._seed_common_version()
             self._initialized = True
-
-    async def _seed_common_version(self) -> None:
-        """
-        当 common 版本尚不存在时，写入当前 common 包版本。
-
-        :return: None。
-        """
-
-        async with self.session_factory() as session:
-            existing_version = await session.scalar(
-                select(func.max(kms_entries.c.version)).where(
-                    kms_entries.c.namespace == "system",
-                    kms_entries.c.key == "common_version",
-                )
-            )
-
-        if existing_version is None:
-            await self.set(
-                "system",
-                "common_version",
-                KmsEntryUpdate(value=__version__),
-                ensure_initialized=False,
-            )
 
     async def get(self, namespace: str, key: str) -> KmsEntry:
         """

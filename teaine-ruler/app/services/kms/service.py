@@ -4,7 +4,7 @@ from sqlalchemy import desc, func, insert, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
 
-from app.infra.postgres.tables import kms_entries, metadata
+from app.infra.db.tables import kms_entries, metadata
 from app.utils.crypto import decrypt_text, encrypt_text
 from teaine_common.models.kms import KmsEntry, KmsEntryUpdate
 

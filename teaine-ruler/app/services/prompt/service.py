@@ -4,7 +4,7 @@ from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
 
-from app.infra.postgres.tables import metadata, prompt_templates
+from app.infra.db.tables import metadata, prompt_templates
 from teaine_common.models.prompt import (
     PromptRenderResponse,
     PromptTemplateCreate,

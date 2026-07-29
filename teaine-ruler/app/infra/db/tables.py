@@ -33,4 +33,8 @@ prompt_templates = Table(
     Column("params", String, nullable=False),
 )
 
-__all__ = ["kms_entries", "metadata", "prompt_templates"]
+__all__ = [
+    "metadata",
+    "kms_entries",
+    "prompt_templates",
+]

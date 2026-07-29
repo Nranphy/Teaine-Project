@@ -4,14 +4,14 @@ from fastapi.testclient import TestClient
 from sqlalchemy import desc, select
 
 from app.app import create_app
-from app.infra.postgres.tables import kms_entries
+from app.infra.db.tables import kms_entries
 from app.services import get_services
 
 HEADERS = {"X-Teaine-Service": "dev", "X-Teaine-Api-Key": "dev-secret"}
 
 
 async def _get_latest_stored_value(namespace: str, key: str) -> str:
-    async with get_services().postgres_session_factory() as session:
+    async with get_services().database_session_factory() as session:
         statement = (
             select(kms_entries.c.value)
             .where(

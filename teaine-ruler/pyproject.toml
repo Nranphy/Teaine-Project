@@ -25,4 +25,5 @@ teaine-common = { path = "../teaine-common", editable = true }
 [dependency-groups]
 dev = [
     "aiosqlite>=0.22.1",
+    "httpx2>=2.9.1",
 ]

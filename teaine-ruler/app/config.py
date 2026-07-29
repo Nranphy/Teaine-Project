@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from typing import Literal
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -30,6 +29,9 @@ class Settings(BaseSettings):
     internal_api_keys: dict[str, str]
     """内部服务 API key 映射，键为服务名称，值为对应密钥"""
 
+    kms_salt: str
+    """KMS value 对称加密盐，用于派生数据库存储密钥"""
+
     model_config = SettingsConfigDict(
         env_ignore_empty=True,
         env_prefix="TEAINE_RULER_",
@@ -37,7 +39,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    @field_validator("service_name", "database_url")
+    @field_validator("service_name", "database_url", "kms_salt")
     @classmethod
     def reject_blank_string(cls, value: str) -> str:
         if not value.strip():

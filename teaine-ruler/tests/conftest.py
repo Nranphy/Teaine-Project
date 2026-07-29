@@ -12,3 +12,4 @@ RULER_ROOT = ROOT / "teaine-ruler"
 os.environ["TEAINE_RULER_SERVICE_NAME"] = "ruler"
 os.environ["TEAINE_RULER_DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"
 os.environ["TEAINE_RULER_INTERNAL_API_KEYS"] = '{"dev":"dev-secret"}'
+os.environ["TEAINE_RULER_KMS_SALT"] = "test-kms-salt"

@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
 
 from app.infra.postgres.tables import kms_entries, metadata
-from app.utils.codec import decode_text, encode_text
+from app.utils.crypto import decrypt_text, encrypt_text
 from teaine_common.models.kms import KmsEntry, KmsEntryUpdate
 
 
@@ -14,20 +14,27 @@ class KmsService:
     基于关系型数据库的版本化键值服务。
 
     每次写入都会为 namespace/key 追加一个新版本，不覆盖旧记录。
-    value 入库前会编码，读取时再解码。
+    value 入库前会对称加密，读取时再解密。
     """
 
-    def __init__(self, engine: AsyncEngine, session_factory: async_sessionmaker):
+    def __init__(
+        self,
+        engine: AsyncEngine,
+        session_factory: async_sessionmaker,
+        kms_salt: str,
+    ):
         """
         初始化 KMS 服务。
 
         :param engine: SQLAlchemy 异步数据库 engine。
         :param session_factory: SQLAlchemy 异步 session factory。
+        :param kms_salt: KMS value 对称加密盐。
         :return: None。
         """
 
         self.engine = engine
         self.session_factory = session_factory
+        self.kms_salt = kms_salt
         self._init_lock = Lock()
         self._initialized = False
 
@@ -79,7 +86,7 @@ class KmsService:
             return KmsEntry(
                 namespace=row["namespace"],
                 key=row["key"],
-                value=decode_text(row["value"]),
+                value=decrypt_text(row["value"], self.kms_salt),
                 version=row["version"],
             )
 
@@ -123,7 +130,7 @@ class KmsService:
                             namespace=namespace,
                             key=key,
                             version=version,
-                            value=encode_text(payload.value),
+                            value=encrypt_text(payload.value, self.kms_salt),
                         )
                     )
                 return KmsEntry(

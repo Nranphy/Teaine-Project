@@ -35,7 +35,7 @@ X-Teaine-Common-Version: 0.1.0
 ## 当前领域
 
 - `system`：服务信息与 common 版本读取。
-- `kms`：普通命名空间 KV。
+- `kms`：普通命名空间 KV，value 在数据库中对称加密存储。
 - `prompt`：Prompt 模板创建、删除、更新和渲染。
 
 Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Ruler 的 system 接口会报告服务端当前导入的 common 版本。

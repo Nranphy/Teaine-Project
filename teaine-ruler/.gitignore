@@ -1,4 +1,5 @@
 .venv
 .vscode
-__pycache__app/data/kms.json
-app/data/prompt/*.txt
+
+.env.prod
+.env.test

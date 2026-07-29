@@ -8,6 +8,17 @@ Ruler 是 Project Teaine 的内部控制面服务，提供 HTTP API、内部服�
 
 Ruler 以 Supabase PostgreSQL 作为主数据存储。服务端核心数据访问优先通过 SQLAlchemy async / PostgreSQL connection 完成；Supabase SDK 只作为后续访问 Supabase Auth、Storage、Realtime 等能力的可选基础设施封装。
 
+## 本地配置
+
+仓库只提交 `.env.test.example` 和 `.env.prod.example` 模板文件；真实 `.env.test`、`.env.prod` 存放本地密钥和数据库链接，不提交到 Git。
+
+首次配置时复制模板并填入本地值：
+
+```powershell
+Copy-Item .env.test.example .env.test
+Copy-Item .env.prod.example .env.prod
+```
+
 ## API 分层
 
 - `/api/v1/public/**`：公开探活等低风险接口。

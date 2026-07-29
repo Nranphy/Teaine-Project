@@ -10,7 +10,7 @@ from app.middleware import (
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Teaine Ruler", version="0.1.0")
+    app = FastAPI(title='Teaine Ruler')
     app.state.settings = settings
     app.middleware("http")(common_version_middleware)
     app.middleware("http")(internal_api_key_middleware)
@@ -20,4 +20,8 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-__all__ = ["app", "create_app"]
+
+__all__ = [
+    'app',
+    'create_app',
+]

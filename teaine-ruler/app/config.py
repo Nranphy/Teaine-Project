@@ -1,38 +1,34 @@
 import os
 from pathlib import Path
+from typing import Literal
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
-RULER_ROOT = Path(__file__).resolve().parents[1]
-ENV_NAME = os.environ.get("TEAINE_RULER_ENV", "test")
-ENV_FILES = {
-    "test": RULER_ROOT / ".env.test",
-    "prod": RULER_ROOT / ".env.prod",
+ENV_FILES: dict[str, str] = {
+    'test': '.env.test',
+    'prod': '.env.prod',
 }
-ENV_FILE = ENV_FILES.get(ENV_NAME, ENV_FILES["test"])
 
 
-def load_env_file(path: Path) -> None:
-    if not path.exists():
-        return
-
-    for line in path.read_text(encoding="utf-8").splitlines():
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#") or "=" not in stripped:
-            continue
-        key, value = stripped.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
-
-
-load_env_file(ENV_FILE)
+def get_env_file_path(env_name: str) -> Path:
+    """:return: 指定环境对应的 env 文件路径。"""
+    ruler_root = Path(__file__).resolve().parent.parent
+    env_file_name = ENV_FILES.get(env_name, ENV_FILES['test'])
+    return ruler_root / env_file_name
 
 
 class Settings(BaseSettings):
+    """全局配置类"""
+
     service_name: str
+    """服务名称，用于内部请求的服务身份标识"""
+
     database_url: str
+    """数据库连接地址，用于初始化 Ruler 数据库访问"""
+
     internal_api_keys: dict[str, str]
+    """内部服务 API key 映射，键为服务名称，值为对应密钥"""
 
     model_config = SettingsConfigDict(
         env_ignore_empty=True,
@@ -60,9 +56,17 @@ class Settings(BaseSettings):
 
 
 def load_settings() -> Settings:
-    return Settings()  # pyright: ignore[reportCallIssue]
+    """加载 env 文件返回运行配置实例"""
+    env_name = os.environ.get('TEAINE_RULER_ENV', 'test')
+    env_file = get_env_file_path(env_name)
+    if not env_file.exists():
+        raise FileNotFoundError(f'Env file not found: {env_file}')
+    return Settings(_env_file=env_file)  # pyright: ignore[reportCallIssue]
 
 
 settings = load_settings()
 
-__all__ = ["ENV_FILE", "ENV_NAME", "Settings", "load_env_file", "load_settings", "settings"]
+__all__ = [
+    'Settings',
+    'settings',
+]

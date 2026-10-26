@@ -16,6 +16,7 @@ from teaine_common.sdk.ruler.resources import (
     RulerKmsResource,
     RulerPromptResource,
     RulerSystemResource,
+    RulerToolResource,
 )
 
 
@@ -33,6 +34,7 @@ class RulerClient:
         self.system = RulerSystemResource(self)
         self.kms = RulerKmsResource(self)
         self.prompt = RulerPromptResource(self)
+        self.tool = RulerToolResource(self)
 
     async def aclose(self) -> None:
         return None

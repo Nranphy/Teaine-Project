@@ -17,7 +17,7 @@ Project Teaine 是一个分布式、以本地优先为核心的虚拟 Agent 系�
 
 ### 2.1 Ruler
 
-`Ruler` 是共享控制面。它负责内部 HTTP API、内部服务鉴权、共享数据访问、KMS、Prompt、Record、Tool 等底层能力。当前阶段暂不提供 Corpus 能力。
+`Ruler` 是共享控制面。它负责内部 HTTP API、内部服务鉴权、共享数据访问、KMS、Prompt、Tool 等底层能力。当前阶段暂不提供 Corpus 能力。
 
 Ruler 当前以 Supabase PostgreSQL 作为主数据存储。服务端核心数据访问优先通过 SQLAlchemy async / PostgreSQL connection 完成；Supabase SDK 只作为后续访问 Auth、Storage、Realtime 等 Supabase 能力的可选基础设施封装。
 
@@ -109,9 +109,10 @@ Common 版本由 `teaine-common` 程序包内的 `__version__` 定义。Common S
 - Ruler 内部请求校验应作为 `app/middleware` 下的 HTTP middleware 提供；服务身份、API key、Common 版本检查分别由独立 middleware 承担，不恢复单独的 `security` 目录。
 - 日志入口放在 `app/utils/log.py`，不恢复单独的 `logging` 目录。
 - Ruler 配置入口放在 `app/config.py`，不放在 Ruler 根目录。
-- Ruler 当前能力保留 `system`、`kms`、`prompt`；Corpus 当前已从 Ruler 和 Common 中移除。
+- Ruler 当前能力保留 `system`、`kms`、`prompt`、`tool`；Corpus 当前已从 Ruler 和 Common 中移除。
 - KMS 使用数据库存储，写入追加新版本，读取返回最新版本，value 入库前需要编码。
 - Prompt 使用数据库存储，字段为 `name`、`description`、`content`、`params`；渲染时必须校验 `params` 声明的必需参数。
+- Tool 当前提供节假日查询能力，通过外部网络接口查询单个日期并返回标准化 DTO。
 - Ruler 不再使用本地 `app/data` 存储 KMS、Prompt 或 Corpus 数据。
 - Ruler 启动参数为 `python -m app --env test|prod`，默认 `test`；环境变量清单文件使用 `.env.test` 和 `.env.prod`，当前只写变量键名。
 

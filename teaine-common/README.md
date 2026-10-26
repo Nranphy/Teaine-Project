@@ -26,6 +26,7 @@ async with RulerClient(
     api_key="secret",
 ) as client:
     prompt = await client.prompt.render("default", {"name": "茶因"})
+    holiday = await client.tool.holiday("2025-01-01")
 ```
 
-Ruler SDK 当前覆盖 `system`、`kms` 和 `prompt`。SDK 会自动在内部请求头中携带本地 common 版本，Ruler 在请求带有版本头时会与服务端 common 版本做一致性检查。
+Ruler SDK 当前覆盖 `system`、`kms`、`prompt` 和 `tool`。SDK 会自动在内部请求头中携带本地 common 版本，Ruler 在请求带有版本头时会与服务端 common 版本做一致性检查。

@@ -22,6 +22,7 @@ def test_ruler_client_exposes_current_resources():
     assert hasattr(client, "system")
     assert hasattr(client, "kms")
     assert hasattr(client, "prompt")
+    assert hasattr(client, "tool")
     assert not hasattr(client, "corpus")
     assert not hasattr(client.system, "ensure_common_version")
 
